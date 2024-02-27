@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
-    public float initialFallSpeed = 5f;
-    public float maxInitialFallSpeed = 10f;  
-    public float accelerationRate = 1f;  
+    public float maxInitialFallSpeed = 10f;
     public int scoreValue = 1;
 
-    private float currentFallSpeed;
+    public float initialFallSpeed;
+    public float currentFallSpeed;
 
     void Start()
     {
+        initialFallSpeed = Random.Range(0, maxInitialFallSpeed);
         currentFallSpeed = initialFallSpeed;
-        StartCoroutine(IncreaseInitialFallSpeedOverTime());
     }
 
     void Update()
@@ -37,16 +36,5 @@ public class ItemController : MonoBehaviour
     void AddToScore()
     {
         ScoreManager.Instance.AddScore(scoreValue);
-    }
-
-    IEnumerator IncreaseInitialFallSpeedOverTime()
-    {
-        while (initialFallSpeed < maxInitialFallSpeed)
-        {
-            initialFallSpeed += accelerationRate * Time.deltaTime;
-            yield return null;
-        }
-
-        currentFallSpeed = initialFallSpeed;
     }
 }
