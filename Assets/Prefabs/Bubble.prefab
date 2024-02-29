@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInitialFallSpeed: 8
   scoreValue: 1
+  destructionSound: {fileID: 8300000, guid: c0da73887f76ee6419c21ab669aa8bde, type: 3}
   initialFallSpeed: 1
   currentFallSpeed: 1
 --- !u!50 &3054658467516203825

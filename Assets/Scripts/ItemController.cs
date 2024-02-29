@@ -6,17 +6,27 @@ public class ItemController : MonoBehaviour
 {
     public float maxInitialFallSpeed = 10f;
     public int scoreValue = 1;
+    public AudioClip destructionSound;
 
     public float initialFallSpeed;
     public float currentFallSpeed;
 
-    void Start()
+    private AudioController audioController;
+
+    private void Start()
     {
         initialFallSpeed = Random.Range(0, maxInitialFallSpeed);
         currentFallSpeed = initialFallSpeed;
+
+        audioController = FindObjectOfType<AudioController>();
+        if (audioController == null)
+        {
+            GameObject audioControllerObject = new GameObject("AudioController");
+            audioController = audioControllerObject.AddComponent<AudioController>();
+        }
     }
 
-    void Update()
+    private void Update()
     {
         transform.Translate(Vector3.down * currentFallSpeed * Time.deltaTime);
 
@@ -28,13 +38,19 @@ public class ItemController : MonoBehaviour
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
                 AddToScore();
+                PlayDestructionSound(); // Play sound when the item is destroyed
                 Destroy(gameObject);
             }
         }
     }
 
-    void AddToScore()
+    private void AddToScore()
     {
         ScoreManager.Instance.AddScore(scoreValue);
+    }
+
+    private void PlayDestructionSound()
+    {
+        audioController.PlayOneShot(destructionSound);
     }
 }
